@@ -32,7 +32,8 @@ function renderNavbar(config) {
             
             <!-- 左侧：Logo、名称与 Topics 下拉菜单 -->
             <div class="flex items-center gap-6">
-                <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-3 group">
+                <!-- 修改这里：将 href 改为你的固定 URL，删掉了 onclick 的滚动事件 -->
+                <a href="https://blog.jaimo.xyz" class="flex items-center gap-3 group">
                     <div class="w-9 h-9 rounded-lg overflow-hidden bg-[#588157] flex items-center justify-center shadow-sm shrink-0">
                         <img src="${config.logoImg}" alt="${config.siteName}" class="w-full h-full object-cover">
                     </div>
