@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JaiMo Blogs</title>
-
-    <!-- 👇 加上这个带有 id 的 link 标签 -->
+    <title>Loading...</title> <!-- 将被 app.js 动态覆盖 -->
     <link id="favicon" rel="icon" type="image/png" href="">
-
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         :root {
@@ -23,36 +20,29 @@
         }
     </style>
 </head>
-<!-- 加上 pt-24，让下方正文自动下移，避免被悬浮的导航栏遮挡 -->
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#588157] selection:text-white pt-24">
 
-    <!-- 1. 顶部导航栏挂载点 -->
+    <!-- 1. 顶部导航栏 -->
     <div id="navbar-container"></div>
 
-    <!-- 复制成功的轻量提示 Toast -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 text-white text-xs px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2">
-        <span>✅ ENS Address Copied!</span>
-    </div>
+    <!-- 2. 全局提示 Toast (文字由 JS 注入) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 text-white text-xs px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2"></div>
 
-    <!-- 全宽 Hero 头图容器 -->
+    <!-- 3. 头图 Hero 区域 -->
     <section id="hero-container" class="w-full"></section>
 
-    <!-- 主体双栏内容容器 -->
+    <!-- 4. 主体文章区域 -->
     <main id="main-container" class="flex-1"></main>
 
-    <!-- 主体内容区域 -->
+    <!-- 5. 联系我们区域 -->
     <main class="flex-grow max-w-7xl mx-auto px-6 py-12 w-full space-y-20">
-        <!-- 4. 联系我们板块挂载点 -->
-        <section id="contact-section">
-            <div id="contact-container"></div>
-        </section>
-
+        <section id="contact-container"></section>
     </main>
 
-    <!-- 5. 底部底页挂载点 -->
+    <!-- 6. 底部 Footer -->
     <div id="footer-container"></div>
 
-    <!-- 引入配置文件与组件逻辑引擎 -->
+    <!-- 引入配置文件与逻辑引擎 -->
     <script src="config.js"></script>
     <script src="app.js"></script>
 </body>
