@@ -7,7 +7,7 @@ window.SITE_CONFIG = {
     // [基础元数据] 网页标签页配置
     meta: {
         siteName: "JaiMo Blogs",
-        title: "JaiMo Blogs - Build from first principles.",
+        title: "JaiMo Labs | Blog",
         logoImg: "picture/avatar.png",
         homeLink: "index.html", // Logo 点击后的跳转链接
         walletAddress: "jaimo.eth" // 点击 Support 时复制的地址
