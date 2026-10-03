@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
 
     // 顶部下拉目录
     topicsMenu: [
-        { name: "Token Price Simulation", link: "https://github.com/jaimoeth/topics/token-price-simulation" },
+        { name: "Token Price Simulation", link: "https://github.com/jaimoeth/topics/token-price-simulation.ipynb" },
         { name: "Contact us", link: "#contact-section" }
     ],
 
@@ -36,7 +36,7 @@ window.SITE_CONFIG = {
                         title: "Token Price Simulation",
                         date: "2026/10/10",
                         tag: "Topics",
-                        url: "https://github.com/jaimoeth/topics/token-price-simulation",
+                        url: "https://github.com/jaimoeth/topics/token-price-simulation.ipynb",
                         summary: "From fundamental assumptions to the derivation of Stochastic Differential Equations (SDEs). The complete process of mathematical modeling and quantitative simulation for token price generation functions."
                     }
                 ]
@@ -50,7 +50,7 @@ window.SITE_CONFIG = {
                         title: "Basics - English",
                         date: "2026/10/12",
                         tag: "Python",
-                        url: "https://github.com/jaimoeth/python/basics-english",
+                        url: "https://github.com/jaimoeth/python/basics-english.ipynb",
                         summary: "These open-source study notes are compiled based on MIT 6.0001, Introduction to Computer Science and Programming in Python, taught by Dr. Ana Bell, Prof. Eric Grimson, and Prof. John Guttag.This note is shared under the CC-BY-NC-SA license."
                     },
                     {
@@ -58,7 +58,7 @@ window.SITE_CONFIG = {
                         title: "Basics - Chinese",
                         date: "2026/10/11",
                         tag: "Python",
-                        url: "https://github.com/jaimoeth/python/basics-chinese",
+                        url: "https://github.com/jaimoeth/python/basics-chinese.ipynb",
                         summary: "这份开源学习笔记基于 Ana Bell 博士、Eric Grimson 教授和 John Guttag 教授讲授的 MIT 6.0001 课程——“计算机科学与 Python 编程导论”——整理而成。本笔记采用 CC-BY-NC-SA 许可协议进行分享。"
                     }
                 ]
@@ -89,7 +89,7 @@ window.SITE_CONFIG = {
             {
                 title: "Topics",
                 links: [
-                    { name: "Token Price Simulation", url: "https://github.com/jaimoeth/topics/token-price-simulation" }
+                    { name: "Token Price Simulation", url: "https://github.com/jaimoeth/topics/token-price-simulation.ipynb" }
                 ]
             },
             {
@@ -107,8 +107,8 @@ window.SITE_CONFIG = {
             {
                 title: "Python",
                 links: [
-                    { name: "Basics - English", url: "https://github.com/jaimoeth/python/basics-english" },
-                    { name: "Basics - Chinese", url: "https://github.com/jaimoeth/python/basics-chinese" }
+                    { name: "Basics - English", url: "https://github.com/jaimoeth/python/basics-english.ipynb" },
+                    { name: "Basics - Chinese", url: "https://github.com/jaimoeth/python/basics-chinese.ipynb" }
                 ]
             }
         ]
