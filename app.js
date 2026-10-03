@@ -39,6 +39,28 @@ function renderNavbar(config) {
     const container = document.getElementById('navbar-container');
     if (!container) return;
     
+    const menuItems = config.navbar.topicsMenu || [];
+    
+    // [核心改进] 根据配置里的 type 属性智能分类，不再依赖固定的数组长度截取
+    const contentItems = menuItems.filter(item => item.type !== 'action');
+    const actionItems = menuItems.filter(item => item.type === 'action');
+
+    const renderDropdownItem = (item) => {
+        const isExternal = item.link.startsWith('http');
+        const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+        const externalIcon = isExternal 
+            ? `<span class="text-[10px] text-gray-400 opacity-70 ml-2 group-hover:text-[#588157] transition-colors">↗</span>` 
+            : '';
+        
+        return `
+            <a href="${item.link}"${targetAttr} 
+               class="group flex items-center justify-between px-3 py-2.5 mx-2 my-1 text-sm text-[#2b2d42] bg-transparent hover:bg-[#f4f7f4] rounded-lg transition-all duration-200 cursor-pointer">
+                <span class="font-medium group-hover:text-[#588157] transition-colors">${item.name}</span>
+                ${externalIcon}
+            </a>
+        `;
+    };
+
     container.innerHTML = `
         <header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/80 border-b border-[#d8e2dc] px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-6">
@@ -53,14 +75,22 @@ function renderNavbar(config) {
                     <button id="topicsBtn" onclick="toggleTopicsMenu()" class="text-xs font-medium px-3.5 py-2 rounded-lg border border-[#d8e2dc] text-[#2b2d42] hover:bg-[#f4f7f4] transition flex items-center gap-1.5 cursor-pointer shadow-sm">
                         ${config.navbar.topicsBtnText} <span class="text-[10px]">▾</span>
                     </button>
-                    <div id="topicsDropdown" class="hidden absolute left-0 mt-2 w-48 bg-white border border-[#d8e2dc] rounded-xl shadow-lg py-2 z-50">
-                        ${config.navbar.topicsMenu.map(item => {
-                            // 智能判断：如果是以 http 开头的链接，就添加 target="_blank" 在新标签页打开
-                            const isExternal = item.link.startsWith('http');
-                            const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
-        
-                            return `<a href="${item.link}"${targetAttr} class="block px-4 py-2 text-sm text-center hover:bg-[#f4f7f4] text-gray-700 transition">${item.name}</a>`;
-                        }).join('')}
+                    
+                    <div id="topicsDropdown" class="hidden absolute left-0 mt-2 w-56 bg-white border border-[#d8e2dc] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] py-2 z-50">
+                        
+                        <!-- 文章列表区 -->
+                        <div class="flex flex-col">
+                            ${contentItems.map(renderDropdownItem).join('')}
+                        </div>
+
+                        <!-- 底部重点独立信息区（有 action 项时自动渲染分割线） -->
+                        ${actionItems.length > 0 ? `
+                            <div class="h-px bg-[#d8e2dc] my-1.5 mx-4 opacity-60"></div>
+                            <div class="flex flex-col">
+                                ${actionItems.map(renderDropdownItem).join('')}
+                            </div>
+                        ` : ''}
+
                     </div>
                 </div>
             </div>
