@@ -9,7 +9,7 @@ window.SITE_CONFIG = {
         siteName: "JaiMo Blogs",
         title: "JaiMo Labs | Blog",
         logoImg: "picture/avatar.png",
-        homeLink: "index.html", // Logo 点击后的跳转链接
+        homeLink: "https://blog.jaimo.xyz", // Logo 点击后的跳转链接
         walletAddress: "jaimo.eth" // 点击 Support 时复制的地址
     },
 
@@ -142,7 +142,7 @@ window.SITE_CONFIG = {
             },
             {
                 title: "Career",
-                links: [{ name: "Stay Tuned", url: "#" }]
+                links: [{ name: "Coming Soon", url: "https://github.com/JaiMoLabs" }]
             },
             {
                 title: "Python",
