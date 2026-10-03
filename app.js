@@ -172,6 +172,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // 3. 渲染联系我们板块（修复 socialLinks 数组匹配问题）
+function submitEmail() {
+    const emailInput = document.getElementById('subscriber-email');
+    const submitBtn = document.getElementById('submit-btn');
+    const email = emailInput.value.trim();
+
+    // 简单校验邮箱格式
+    if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+
+    // 按钮进入加载状态，防止重复点击
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = 'Submitting...';
+    submitBtn.disabled = true;
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxV1CMbO_pJ-zK0jxnS7VJqOue4AkPyCK7aiN_9A2rsLMtu6_FRgcxoVKuXIBV0Z4ar0A/exec';
+
+    // 使用 no-cors 模式发送请求到 Google Apps Script
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(() => {
+        alert('Thank you for subscribing!');
+        emailInput.value = ''; // 清空输入框
+    })
+    .catch(error => {
+        console.error('Error!', error);
+        alert('Something went wrong, please try again later.');
+    })
+    .finally(() => {
+        // 恢复按钮状态
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+    });
+}
+
 function renderContactSection(socialLinks) {
     const container = document.getElementById('contact-container');
     if (!container) return;
@@ -221,8 +263,8 @@ function renderContactSection(socialLinks) {
                     <p class="text-sm text-gray-600 mt-2">Get the latest technical articles and project milestones delivered directly to your inbox.</p>
                 </div>
                 <div class="mt-6 flex gap-2">
-                    <input type="email" placeholder="Enter Email" class="bg-[#f4f7f4] border border-[#d8e2dc] text-xs rounded-xl px-3 py-2.5 w-full focus:outline-none focus:border-[#588157]">
-                    <button onclick="alert('Subscription successful!')" class="bg-[#588157] text-white text-xs font-semibold px-4 py-2.5 rounded-xl hover:bg-[#3a5a40] transition cursor-pointer shrink-0">
+                    <input type="email" id="subscriber-email" placeholder="Enter Email" class="bg-[#f4f7f4] border border-[#d8e2dc] text-xs rounded-xl px-3 py-2.5 w-full focus:outline-none focus:border-[#588157]">
+                    <button onclick="submitEmail()" id="submit-btn" class="bg-[#588157] text-white text-xs font-semibold px-4 py-2.5 rounded-xl hover:bg-[#3a5a40] transition cursor-pointer shrink-0">
                         Submit
                     </button>
                 </div>
