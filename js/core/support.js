@@ -7,7 +7,7 @@ window.Blog = window.Blog || {};
 /**
  * Support 按钮统一入口
  * - 未连接：复制 ENS
- * - 已连接：向 jaimo.eth 发送 0.001 ETH（以太坊主网）
+ * - 已连接：向 jaimo.eth 发送 0.002 ETH（以太坊主网）
  */
 Blog.handleSupportClick = async function() {
     // 1) 未连接钱包：保持原来的复制 ENS 行为
@@ -21,7 +21,7 @@ Blog.handleSupportClick = async function() {
 };
 
 /**
- * 向 jaimo.eth 发送 0.001 ETH
+ * 向 jaimo.eth 发送 0.002 ETH
  */
 Blog.sendSupportEth = async function() {
     if (!Blog.hasEthereumProvider || !Blog.hasEthereumProvider()) {
@@ -38,7 +38,7 @@ Blog.sendSupportEth = async function() {
         ? window.SITE_CONFIG.navbar.walletAddress
         : 'jaimo.eth';
 
-    const amountEth = '0.0001';
+    const amountEth = '0.002';
 
     try {
         Blog.showToast('正在准备支付...');
@@ -57,7 +57,7 @@ Blog.sendSupportEth = async function() {
             return;
         }
 
-        // 发送 0.001 ETH
+        // 发送 0.002 ETH
         const tx = await signer.sendTransaction({
             to: toAddress,
             value: ethers.parseEther(amountEth)
