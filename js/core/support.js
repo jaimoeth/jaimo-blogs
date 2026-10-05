@@ -38,7 +38,7 @@ Blog.sendSupportEth = async function() {
         ? window.SITE_CONFIG.navbar.walletAddress
         : 'jaimo.eth';
 
-    const amountEth = '0.001';
+    const amountEth = '0.0001';
 
     try {
         Blog.showToast('正在准备支付...');
