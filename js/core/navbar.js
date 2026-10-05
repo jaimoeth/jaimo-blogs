@@ -64,7 +64,7 @@ Blog.renderNavbar = function(commonConfig) {
             </div>
 
             <div class="flex items-center gap-3">
-                <button onclick="Blog.copyWalletAddress()" class="text-xs font-medium px-3.5 py-2 rounded-lg border border-[#588157] text-[#588157] hover:bg-[#588157] hover:text-white transition cursor-pointer">
+                <button onclick="Blog.handleSupportClick()" class="text-xs font-medium px-3.5 py-2 rounded-lg border border-[#588157] text-[#588157] hover:bg-[#588157] hover:text-white transition cursor-pointer">
                     ${navbarConfig.supportBtnText}
                 </button>
                 <button
