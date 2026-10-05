@@ -337,7 +337,7 @@ function submitEmail() {
     submitBtn.innerText = config.messages.emailSubmitting;
     submitBtn.disabled = true;
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxV1CMbO_pJ-zK0jxnS7VJqOue4AkPyCK7aiN_9A2rsLMtu6_FRgcxoVKuXIBV0Z4ar0A/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxUkg0mIXmkcLyl_-NwthQQSnN8E1WaBGkiU41U88R-kn_tbfl5QXIaVJuf4fDMn2tcoA/exec';
 
     fetch(scriptURL, {
         method: 'POST',
