@@ -4,10 +4,24 @@
 
 window.Blog = window.Blog || {};
 
+const config = window.SITE_CONFIG.support;
+const walletAddr = config.walletAddress;
+const amountEth = config.amountEth;
+const network = config.network;
+
+Blog.copyWalletAddress = function() {
+
+    navigator.clipboard.writeText(walletAddr).then(() => {
+        Blog.showToast(config.messages.copySuccess);
+    }).catch(() => {
+        Blog.showToast(config.messages.copyError);
+    });
+}
+
 /**
  * Support 按钮统一入口
- * - 未连接：复制 ENS
- * - 已连接：向 jaimo.eth 发送 0.002 ETH（以太坊主网）
+ * - 未连接：复制收款地址
+ * - 已连接：发起 ETH 打赏
  */
 Blog.handleSupportClick = async function() {
     // 1) 未连接钱包：保持原来的复制 ENS 行为
@@ -21,27 +35,22 @@ Blog.handleSupportClick = async function() {
 };
 
 /**
- * 向 jaimo.eth 发送 0.002 ETH
+ * 发起 ETH 打赏
  */
 Blog.sendSupportEth = async function() {
+
     if (!Blog.hasEthereumProvider || !Blog.hasEthereumProvider()) {
-        Blog.showToast('未检测到钱包，请先安装 MetaMask');
+        Blog.showToast(config.messages.walletNotFound);
         return;
     }
 
     if (typeof ethers === 'undefined') {
-        Blog.showToast('支付组件未加载，请刷新后重试');
+        Blog.showToast(config.messages.ethersNotLoaded);
         return;
     }
 
-    const ensName = (window.SITE_CONFIG && window.SITE_CONFIG.navbar && window.SITE_CONFIG.navbar.walletAddress)
-        ? window.SITE_CONFIG.navbar.walletAddress
-        : 'jaimo.eth';
-
-    const amountEth = '0.002';
-
     try {
-        Blog.showToast('正在准备支付...');
+        Blog.showToast(config.messages.preparing);
 
         // 确保在以太坊主网
         const okNetwork = await Blog.ensureMainnet();
@@ -51,9 +60,9 @@ Blog.sendSupportEth = async function() {
         const signer = await provider.getSigner();
 
         // 解析 jaimo.eth -> 地址
-        const toAddress = await provider.resolveName(ensName);
+        const toAddress = await provider.resolveName(walletAddr);
         if (!toAddress) {
-            Blog.showToast('无法解析 ' + ensName + ' 的地址');
+            Blog.showToast(config.messages.resolveFailed + ' ' + walletAddr);
             return;
         }
 
@@ -63,71 +72,64 @@ Blog.sendSupportEth = async function() {
             value: ethers.parseEther(amountEth)
         });
 
-        Blog.showToast('交易已提交，等待确认...');
+        Blog.showToast(config.messages.transactionPending);
 
         // 等 1 个确认（可选，体验更好）
         await tx.wait(1);
 
-        Blog.showToast('支持成功，感谢！');
+        Blog.showToast(config.messages.success);
         console.log('[Support] tx hash =', tx.hash);
     } catch (error) {
         console.error('sendSupportEth error:', error);
 
         // 用户拒绝
         if (error && (error.code === 4001 || error.code === 'ACTION_REJECTED')) {
-            Blog.showToast('你取消了支付');
+            Blog.showToast(config.messages.cancelled);
             return;
         }
 
         // 余额不足等
         const msg = (error && error.shortMessage) || (error && error.message) || '';
         if (msg.toLowerCase().includes('insufficient funds')) {
-            Blog.showToast('余额不足，请确保主网有足够 ETH');
+            Blog.showToast(config.messages.insufficientFunds);
             return;
         }
 
-        Blog.showToast('支付失败，请稍后重试');
+        Blog.showToast(config.messages.failed);
     }
 };
 
 /**
- * 确保当前钱包在以太坊主网（chainId = 1）
- * 不在主网时尝试切换；没有该网络则尝试添加
+ * 确保当前钱包连接到指定网络
+ * 不在目标网络时尝试切换；没有该网络则尝试添加
  */
 Blog.ensureMainnet = async function() {
+
     try {
         const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
         const chainId = parseInt(chainIdHex, 16);
 
-        if (chainId === 1) return true;
+        if (chainId === network.chainId) return true;
 
-        Blog.showToast('请切换到以太坊主网...');
+        Blog.showToast(config.messages.switchMainnet);
 
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x1' }]
+                params: [{ chainId: network.chainIdHex }]
             });
             return true;
         } catch (switchError) {
-            // 4902: 钱包里没有该网络
             if (switchError && switchError.code === 4902) {
                 await window.ethereum.request({
                     method: 'wallet_addEthereumChain',
-                    params: [{
-                        chainId: '0x1',
-                        chainName: 'Ethereum Mainnet',
-                        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-                        rpcUrls: ['https://ethereum.publicnode.com'],
-                        blockExplorerUrls: ['https://etherscan.io']
-                    }]
+                    params: [network]
                 });
                 return true;
             }
 
-            // 用户拒绝切换
             if (switchError && (switchError.code === 4001 || switchError.code === 'ACTION_REJECTED')) {
-                Blog.showToast('需要切换到以太坊主网才能支付');
+                Blog.showToast(config.messages.switchMainnetRequired);
                 return false;
             }
 
@@ -135,7 +137,7 @@ Blog.ensureMainnet = async function() {
         }
     } catch (error) {
         console.error('ensureMainnet error:', error);
-        Blog.showToast('切换主网失败，请手动切换后重试');
+        Blog.showToast(config.messages.switchMainnetFailed);
         return false;
     }
 };

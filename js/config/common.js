@@ -16,26 +16,52 @@ window.SITE_CONFIG = {
         googleScriptURL: "https://script.google.com/macros/s/AKfycbxxHkGniVjoZMsDe2LVOcgc1nbK9FUQ9R-zvbuI9m8tKO__tYQuxUfBxhAPoXAlaO9qUg/exec"
     },
 
-    messages: {
-        copySuccess: "✅ ENS Address Copied!",
-        walletComingSoon: "❌ Coming soon with Mainnet launch!",
-        emailInvalid: "❌ Please enter a valid email address.",
-        emailSubmitting: "Submitting...",
-        emailSuccess: "✅ Thank you for subscribing!",
-        emailError: "❌ Something went wrong, please try again later."
-    },
-
     navbar: {
         topicsBtnText: "Topics",
         slogan: "Build from first principles.",
         supportBtnText: "Support",
         connectWalletBtnText: "Connect Wallet",
-        walletAddress: "jaimo.eth",
         topicsMenu: [
             { name: "Token Price Simulation", link: "https://github.com/jaimoeth/topics/blob/main/token-price-simulation.ipynb", type: "article" },
             { name: "✅ Verify via ENS", link: "https://app.ens.domains/jaimo.eth", type: "action" },
             { name: "💬 Contact Us", link: "#contact-container", type: "action" }
         ]
+    },
+
+    support: {
+        walletAddress: "jaimo.eth",
+        amountEth: "0.002",
+        messages: {
+            copySuccess: "✅ ENS Address Copied!",
+            copyError: "复制失败，请手动复制",
+            walletNotFound: "未检测到钱包，请先安装 MetaMask",
+            ethersNotLoaded: "支付组件未加载，请刷新后重试",
+            preparing: "正在准备支付...",
+            resolveFailed: "无法解析目标地址",
+            transactionPending: "交易已提交，等待确认...",
+            success: "支持成功，感谢！",
+            cancelled: "你取消了支付",
+            insufficientFunds: "余额不足，请确保主网有足够 ETH",
+            failed: "支付失败，请稍后重试",
+            switchMainnet: "请切换到以太坊主网...",
+            switchMainnetFailed: "切换主网失败，请手动切换后重试",
+            switchMainnetRequired: "需要切换到以太坊主网才能支付"
+        },
+        network: {
+            chainId: 1,
+            chainIdHex: "0x1",
+            chainName: "Ethereum Mainnet",
+            nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+            rpcUrls: ["https://ethereum.publicnode.com"],
+            blockExplorerUrls: ["https://etherscan.io"]
+        }
+    },
+
+    messages: {
+        emailInvalid: "❌ Please enter a valid email address.",
+        emailSubmitting: "Submitting...",
+        emailSuccess: "✅ Thank you for subscribing!",
+        emailError: "❌ Something went wrong, please try again later."
     },
 
     contact: {

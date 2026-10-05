@@ -30,17 +30,6 @@ Blog.toggleTopicsMenu = function() {
     if (menu) menu.classList.toggle('hidden');
 }
 
-Blog.copyWalletAddress = function() {
-    const config = window.SITE_CONFIG;
-    const walletAddr = config.navbar.walletAddress;
-
-    navigator.clipboard.writeText(walletAddr).then(() => {
-        Blog.showToast(config.messages.copySuccess);
-    }).catch(() => {
-        Blog.showToast('复制失败，请手动复制');
-    });
-}
-
 Blog.initGlobalEvents = function() {
     window.addEventListener('click', function(e) {
         const btn = document.getElementById('topicsBtn');
