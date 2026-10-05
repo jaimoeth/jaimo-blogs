@@ -2,7 +2,9 @@
 // 谷歌表格后端交互逻辑 (js/database/appscript.js)
 // ==========================================
 
-function subscribeEmailToSheet() {
+window.Blog = window.Blog || {};
+
+Blog.subscribeEmailToSheet = function() {
     const config = window.SITE_CONFIG;
     const emailInput = document.getElementById('subscriber-email');
     const submitBtn = document.getElementById('submit-btn');
@@ -11,8 +13,10 @@ function subscribeEmailToSheet() {
     
     const email = emailInput.value.trim();
 
-    if (!email || !email.includes('@')) {
-        alert(config.messages.emailInvalid);
+    // 更靠谱一点的邮箱检查
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        Blog.showToast(config.messages.emailInvalid);
         return;
     }
 
@@ -20,11 +24,10 @@ function subscribeEmailToSheet() {
     submitBtn.innerText = config.messages.emailSubmitting;
     submitBtn.disabled = true;
 
-    // 从全局配置中安全获取 Google Apps Script URL
     const scriptURL = config.api && config.api.googleScriptURL;
     if (!scriptURL) {
         console.error("Google Apps Script URL not configured!");
-        alert(config.messages.emailError);
+        Blog.showToast(config.messages.emailError);
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;
         return;
@@ -37,15 +40,15 @@ function subscribeEmailToSheet() {
         body: JSON.stringify({ email: email })
     })
     .then(() => {
-        alert(config.messages.emailSuccess);
-        emailInput.value = ''; 
+        Blog.showToast(config.messages.emailSuccess);
+        emailInput.value = '';
     })
     .catch(error => {
         console.error('Error submitting email!', error);
-        alert(config.messages.emailError);
+        Blog.showToast(config.messages.emailError);
     })
     .finally(() => {
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;
     });
-}
+};
