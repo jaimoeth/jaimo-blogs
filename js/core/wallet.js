@@ -58,34 +58,26 @@ Blog.updateWalletButton = function() {
 Blog.resolveEnsName = async function(address) {
     if (!address) return null;
 
-    // 没加载到 ethers 就跳过
-    if (typeof ethers === 'undefined') {
-        console.warn('ethers.js 未加载，跳过 ENS 解析');
-        return null;
-    }
-
     try {
-        // 优先用钱包自己的 provider（更贴近用户当前网络）
-        // 若失败，再退回公共 RPC
-        let provider;
-
-        if (Blog.hasEthereumProvider()) {
-            provider = new ethers.BrowserProvider(window.ethereum);
-        } else {
-            provider = ethers.getDefaultProvider('mainnet');
+        // 公共 ENS 解析接口：地址 -> 主域名
+        const res = await fetch('https://api.ensideas.com/ens/resolve/' + address);
+        if (!res.ok) {
+            console.warn('[ENS-API] http error', res.status);
+            return null;
         }
 
-        const name = await provider.lookupAddress(address);
+        const data = await res.json();
+        console.log('[ENS-API] data =', data);
 
-        // lookupAddress 可能返回 null
+        // 兼容不同返回字段
+        const name = data.name || data.reverseRecordName || data.displayName || null;
+
         if (!name) return null;
 
-        // 再正向验证一次，避免假解析
-        const resolved = await provider.resolveName(name);
-        if (resolved && resolved.toLowerCase() === address.toLowerCase()) {
+        // 简单校验：应该是类似 xxx.eth 的名字
+        if (typeof name === 'string' && name.includes('.')) {
             return name;
         }
-
         return null;
     } catch (error) {
         console.warn('ENS resolve failed:', error);
