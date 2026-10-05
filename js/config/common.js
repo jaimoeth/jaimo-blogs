@@ -1,19 +1,21 @@
 // ==========================================
-// 1. 官网数据配置文件 (config.js)
-// 所有的文本、链接、提示语、图片配置全在这里，修改网页内容只需改此文件
+// 1. 全局公共配置文件 (js/config/common.js)
 // ==========================================
 
 window.SITE_CONFIG = {
-    // [基础元数据] 网页标签页配置
     meta: {
-        siteName: "JaiMo Blogs",
         title: "JaiMo Labs | Blog",
-        logoImg: "picture/avatar.png",
-        homeLink: "https://blog.jaimo.xyz", // Logo 点击后的跳转链接
-        walletAddress: "jaimo.eth" // 点击 Support 时复制的地址
+        logoImg: "images/avatar.png",
+        backgroundImage: "images/background.png",
+        siteName: "JaiMo Blogs",
+        homeLink: "https://blog.jaimo.xyz"
     },
 
-    // [全局提示语] 弹窗与交互状态文本
+    // 后端服务与API相关配置
+    api: {
+        googleScriptURL: "https://script.google.com/macros/s/AKfycbxxHkGniVjoZMsDe2LVOcgc1nbK9FUQ9R-zvbuI9m8tKO__tYQuxUfBxhAPoXAlaO9qUg/exec"
+    },
+
     messages: {
         copySuccess: "✅ ENS Address Copied!",
         walletComingSoon: "Coming soon with Mainnet launch!",
@@ -23,102 +25,19 @@ window.SITE_CONFIG = {
         emailError: "Something went wrong, please try again later."
     },
 
-    // [顶部导航栏]
     navbar: {
-        slogan: "Build from first principles.",
         topicsBtnText: "Topics",
+        slogan: "Build from first principles.",
         supportBtnText: "Support",
         connectWalletBtnText: "Connect Wallet",
+        walletAddress: "jaimo.eth",
         topicsMenu: [
-            // 普通文章/内容项 (type: "article")
             { name: "Token Price Simulation", link: "https://github.com/jaimoeth/topics/blob/main/token-price-simulation.ipynb", type: "article" },
-        
-            // 你可以随时在这里继续加更多文章...
-            // { name: "Another Research Paper", link: "...", type: "article" },
-
-            // 重点突出的独立信息/操作项 (type: "action" 或自定义标记)
             { name: "✅ Verify via ENS", link: "https://app.ens.domains/jaimo.eth", type: "action" },
             { name: "💬 Contact Us", link: "#contact-container", type: "action" }
         ]
     },
 
-    // [全宽头图区域]
-    hero: {
-        backgroundImage: "picture/background.png",
-        title: "JaiMo Blogs",
-        subtitle: "Build from first principles."
-    },
-
-    // [主体数据库与文章流]
-    database: {
-        title: "Database",
-        titleIcon: "🌱",
-        latestTitle: "Latest Articles",
-        latestIcon: "🪵",
-        latestCount: 5, // 右侧展示最新文章的数量
-        categories: [
-            {
-                name: "Topics",
-                icon: "📊",
-                articles: [
-                    {
-                        id: "token-price-pimulation",
-                        title: "Token Price Simulation",
-                        date: "2026/10/10",
-                        tag: "Topics",
-                        url: "https://github.com/jaimoeth/topics/blob/main/token-price-simulation.ipynb",
-                        summary: "From fundamental assumptions to the derivation of Stochastic Differential Equations (SDEs). The complete process of mathematical modeling and quantitative simulation for token price generation functions."
-                    }
-                ]
-            },
-            {
-                name: "Python",
-                icon: "🐍",
-                articles: [
-                    {
-                        id: "basics-english",
-                        title: "Basics - English",
-                        date: "2026/10/12",
-                        tag: "Python",
-                        url: "https://github.com/jaimoeth/python/blob/main/basics-english.ipynb",
-                        summary: "These open-source study notes are based on the MIT 6.0001 course taught by Dr. Ana Bell and other professors. They are shared under the CC-BY-NC-SA license."
-                    },
-                    {
-                        id: "basics-chinese",
-                        title: "Basics - Chinese",
-                        date: "2026/10/11",
-                        tag: "Python",
-                        url: "https://github.com/jaimoeth/python/blob/main/basics-chinese.ipynb",
-                        summary: "这份开源学习笔记基于 Ana Bell 博士等教授讲授的 MIT 6.0001 课程整理而成。本笔记采用 CC-BY-NC-SA 许可协议进行分享。"
-                    }
-                ]
-            },
-            {
-                name: "Products",
-                icon: "🔬",
-                articles: [
-                    {
-                        id: "blog-website",
-                        title: "Blog Website",
-                        date: "2026/10/03",
-                        tag: "Products",
-                        url: "https://github.com/JaiMoLabs/blog-web",
-                        summary: "An open-source template for Web3 static blogs and personal knowledge bases, showcasing decentralized web practices."
-                    },
-                    {
-                        id: "text-website",
-                        title: "Text Website",
-                        date: "2026/10/15",
-                        tag: "Products",
-                        url: "https://github.com/JaiMoLabs/text-web",
-                        summary: "An open-source template for Web3 static blog content pages, designed to be used with open-source blog content."
-                    }
-                ]
-            }
-        ]
-    },
-
-    // [联系我们板块]
     contact: {
         title: "Connect with us",
         subtitle: "Have questions, feedback, or want to collaborate? Reach out through our official channels.",
@@ -142,7 +61,6 @@ window.SITE_CONFIG = {
         }
     },
 
-    // [底部栏配置]
     footer: {
         copyright: "@2026 JaiMo Labs. All rights reserved.",
         tagline: "Decentralized & Autonomous",
@@ -176,7 +94,6 @@ window.SITE_CONFIG = {
         ]
     },
 
-    // [社交媒体配置] 
     socialLinks: [
         {
             name: "ENS",
