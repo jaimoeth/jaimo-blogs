@@ -45,10 +45,7 @@ Blog.updateWalletButton = function() {
         btn.title = Blog.wallet.address; // 鼠标悬停看完整地址
         btn.classList.add('is-connected');
     } else {
-        const text = (window.SITE_CONFIG && wallet.connectBtnText)
-            ? wallet.connectBtnText
-            : 'Connect Wallet';
-        btn.innerText = text;
+        btn.innerText = wallet.connectBtnText;
         btn.title = '';
         btn.classList.remove('is-connected');
     }

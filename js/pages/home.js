@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Blog.initDocumentMeta(commonConfig.meta);
     
     // 2. 渲染公共外设模块
-    Blog.renderNavbar(commonConfig);
+    Blog.renderNavbar();
     Blog.renderHero(commonConfig);
     
     // 3. 渲染主干内容
