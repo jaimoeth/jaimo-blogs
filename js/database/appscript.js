@@ -1,9 +1,10 @@
 // ==========================================
-// 谷歌表格后端交互逻辑 (js/database/appscript.js)
+// 邮箱订阅与 Google Apps Script 交互 / Email subscription and Google Apps Script integration
 // ==========================================
 
 window.Blog = window.Blog || {};
 
+// 验证邮箱域名是否存在有效的 DNS 记录 / Validate whether the email domain has valid DNS records
 Blog.validateEmailDomain = async function(domain) {
     const queryDNS = async (type) => {
         const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=${type}`, {
@@ -23,6 +24,7 @@ Blog.validateEmailDomain = async function(domain) {
     }
 };
 
+// 验证邮箱并提交至 Google Apps Script / Validate the email and submit it to Google Apps Script
 Blog.subscribeEmailToSheet = async function() {
     const config = window.SITE_CONFIG;
     const emailInput = document.getElementById('subscriber-email');
@@ -32,7 +34,7 @@ Blog.subscribeEmailToSheet = async function() {
 
     const email = emailInput.value.trim();
 
-    // 更靠谱一点的邮箱检查
+    // 基础邮箱格式检查 / Basic email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
         Blog.showToast(config.messages.emailInvalid);
@@ -44,7 +46,7 @@ Blog.subscribeEmailToSheet = async function() {
     submitBtn.innerText = config.messages.emailSubmitting;
     submitBtn.disabled = true;
 
-    // 检查邮箱域名是否真实存在
+    // 检查邮箱域名是否真实存在 / Check whether the email domain actually exists
     if (!await Blog.validateEmailDomain(domain)) {
         Blog.showToast(config.messages.emailInvalid);
         submitBtn.innerText = originalText;

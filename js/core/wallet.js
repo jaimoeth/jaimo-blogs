@@ -1,5 +1,5 @@
 // ==========================================
-// 钱包连接 (js/core/wallet.js)
+// 钱包连接 / Wallet connection
 // ==========================================
 
 window.Blog = window.Blog || {};
@@ -14,7 +14,8 @@ Blog.wallet = {
 };
 
 /**
- * 缩短地址：0x1234...abcd
+ * 缩短钱包地址 / Shorten a wallet address
+ * 例如：0x1234...abcd / Example: 0x1234...abcd
  */
 Blog.shortenAddress = function(address) {
     if (!address || address.length < 10) return address;
@@ -22,15 +23,15 @@ Blog.shortenAddress = function(address) {
 };
 
 /**
- * 检查是否有浏览器钱包
+ * 检查浏览器是否提供 Ethereum Provider / Check whether an Ethereum provider is available
  */
 Blog.hasEthereumProvider = function() {
     return typeof window.ethereum !== 'undefined' && window.ethereum;
 };
 
 /**
- * 更新导航栏按钮文案
- * 优先显示 ENS，没有则显示短地址
+ * 更新导航栏按钮文案 / Update the wallet button label
+ * 优先显示 ENS，没有则显示短地址 / Prefer the ENS name, otherwise show the shortened address
  */
 Blog.updateWalletButton = function() {
     const btn = document.getElementById('connect-wallet-btn');
@@ -42,7 +43,7 @@ Blog.updateWalletButton = function() {
             : Blog.shortenAddress(Blog.wallet.address);
 
         btn.innerText = display;
-        btn.title = Blog.wallet.address; // 鼠标悬停看完整地址
+        btn.title = Blog.wallet.address; // 鼠标悬停查看完整地址 / Show the full address on hover
         btn.classList.add('is-connected');
     } else {
         btn.innerText = wallet.connectBtnText;
@@ -52,14 +53,15 @@ Blog.updateWalletButton = function() {
 };
 
 /**
- * 反向解析 ENS：地址 -> 域名
- * 成功返回 "xxx.eth"，失败/没有返回 null
+ * 反向解析 ENS：地址 -> 域名 / Reverse resolve ENS: address -> name
+ * 成功返回 ENS 名称，失败或不存在则返回 null
+ * Returns the ENS name on success, otherwise null
  */
 Blog.resolveEnsName = async function(address) {
     if (!address) return null;
 
     try {
-        // 公共 ENS 解析接口：地址 -> 主域名
+        // 使用公共 ENS 解析接口获取主域名 / Use the public ENS resolver API to retrieve the primary name
         const res = await fetch(ensURL + address);
         if (!res.ok) {
             console.warn('[ENS-API] http error', res.status);
@@ -69,12 +71,12 @@ Blog.resolveEnsName = async function(address) {
         const data = await res.json();
         console.log('[ENS-API] data =', data);
 
-        // 兼容不同返回字段
+        // 兼容不同返回字段 / Support multiple possible response fields
         const name = data.name || data.reverseRecordName || data.displayName || null;
 
         if (!name) return null;
 
-        // 简单校验：应该是类似 xxx.eth 的名字
+        // 简单确认返回值具有域名结构 / Perform a basic domain-format check
         if (typeof name === 'string' && name.includes('.')) {
             return name;
         }
@@ -87,18 +89,22 @@ Blog.resolveEnsName = async function(address) {
 
 /**
  * 设置当前钱包地址，并尝试解析 ENS
+ * Set the current wallet address and attempt ENS resolution
  */
 Blog.setWalletAccount = async function(address) {
     Blog.wallet.address = address || null;
     Blog.wallet.ensName = null;
 
-    // 先立刻显示短地址，避免等待 ENS 时按钮空白
+    // 先显示短地址，避免等待 ENS 解析时按钮为空
+    // Show the shortened address immediately instead of waiting for ENS resolution
     Blog.updateWalletButton();
 
     if (!address) return;
 
     const ensName = await Blog.resolveEnsName(address);
-    // 防止解析完成时用户已经切换/断开账户
+
+    // 防止异步解析完成时账户已经发生切换或断开
+    // Prevent stale ENS results after the account has changed or disconnected
     if (Blog.wallet.address && Blog.wallet.address.toLowerCase() === address.toLowerCase()) {
         Blog.wallet.ensName = ensName;
         Blog.updateWalletButton();
@@ -106,7 +112,7 @@ Blog.setWalletAccount = async function(address) {
 };
 
 /**
- * 连接钱包
+ * 请求连接钱包 / Request wallet connection
  */
 Blog.connectWallet = async function() {
     if (Blog.wallet.isConnecting) return;
@@ -137,6 +143,7 @@ Blog.connectWallet = async function() {
     } catch (error) {
         console.error('connectWallet error:', error);
 
+        // 用户拒绝连接 / User rejected the connection request
         if (error && (error.code === 4001 || error.code === 'ACTION_REJECTED')) {
             Blog.showToast(wallet.messages.cancelled);
         } else {
@@ -148,7 +155,8 @@ Blog.connectWallet = async function() {
 };
 
 /**
- * 页面加载时恢复已连接账户（不弹窗）
+ * 页面加载时恢复已连接账户，不主动弹出钱包请求
+ * Restore an existing wallet connection on page load without prompting the user
  */
 Blog.tryRestoreWallet = async function() {
     if (!Blog.hasEthereumProvider()) return;
@@ -167,7 +175,7 @@ Blog.tryRestoreWallet = async function() {
 };
 
 /**
- * 监听账户切换 / 断开
+ * 监听账户切换与断开 / Listen for account changes and disconnection
  */
 Blog.bindWalletEvents = function() {
     if (!Blog.hasEthereumProvider()) return;
@@ -184,9 +192,9 @@ Blog.bindWalletEvents = function() {
 };
 
 /**
- * 点击按钮：
- * - 未连接：连接
- * - 已连接：复制地址
+ * 钱包按钮统一入口 / Unified entry point for the wallet button
+ * - 未连接：连接钱包 / Not connected: connect wallet
+ * - 已连接：复制当前地址 / Connected: copy the current address
  */
 Blog.handleWalletButtonClick = async function() {
     if (Blog.wallet.address) {

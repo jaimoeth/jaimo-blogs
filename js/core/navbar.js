@@ -1,5 +1,5 @@
 // ==========================================
-// 顶部导航栏组件 (js/core/navbar.js)
+// 顶部导航栏组件 / Top navigation bar component
 // ==========================================
 
 window.Blog = window.Blog || {};
@@ -10,12 +10,13 @@ Blog.renderNavbar = function() {
     const container = document.getElementById('navbar-container');
     if (!container) return;
     
-    // 获取导航栏配置
+    // 获取导航配置并按类型拆分菜单项 / Load navigation configuration and separate menu items by type
     const navbarConfig = commonConfig.navbar;
     const menuItems = navbarConfig.topicsMenu || [];
     const contentItems = menuItems.filter(item => item.type !== 'action');
     const actionItems = menuItems.filter(item => item.type === 'action');
 
+    // 根据菜单项配置生成下拉菜单内容 / Generate dropdown menu items from configuration
     const renderDropdownItem = (item) => {
         const isExternal = item.link.startsWith('http');
         const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';

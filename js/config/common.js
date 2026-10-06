@@ -1,8 +1,9 @@
 // ==========================================
-// 1. 全局公共配置文件 (js/config/common.js)
+// 全局公共配置 / Global shared configuration
 // ==========================================
 
 window.SITE_CONFIG = {
+    // 站点基础信息 / Basic site information
     meta: {
         title: "JaiMo Labs | Blog",
         logoImg: "images/avatar.png",
@@ -11,12 +12,13 @@ window.SITE_CONFIG = {
         homeLink: "https://blog.jaimo.xyz"
     },
 
-    // 后端服务与API相关配置
+    // 后端服务与 API 配置 / Backend services and API configuration
     api: {
         ensURL:"https://api.ensideas.com/ens/resolve/",
         googleScriptURL: "https://script.google.com/macros/s/AKfycbxxHkGniVjoZMsDe2LVOcgc1nbK9FUQ9R-zvbuI9m8tKO__tYQuxUfBxhAPoXAlaO9qUg/exec"
     },
 
+    // 顶部导航栏配置 / Navigation bar configuration
     navbar: {
         topicsBtnText: "Topics",
         slogan: "Build from first principles.",
@@ -27,6 +29,7 @@ window.SITE_CONFIG = {
         ]
     },
 
+    // 钱包连接配置 / Wallet connection configuration
     wallet: {
         connectBtnText: "Connect Wallet",
         messages: {
@@ -45,6 +48,7 @@ window.SITE_CONFIG = {
         }
     },
 
+    // 支持/赞助功能配置 / Support and donation configuration
     support: {
         supportBtnText: "Support",
         walletAddress: "jaimo.eth",
@@ -65,6 +69,7 @@ window.SITE_CONFIG = {
             switchMainnetFailed: "切换主网失败，请手动切换后重试",
             switchMainnetRequired: "需要切换到以太坊主网才能支付"
         },
+        // Ethereum Mainnet 网络参数 / Ethereum Mainnet network parameters
         network: {
             chainId: 1,
             chainIdHex: "0x1",
@@ -75,6 +80,7 @@ window.SITE_CONFIG = {
         }
     },
 
+    // 全局提示信息 / Global notification messages
     messages: {
         emailInvalid: "❌ Please enter a valid email address.",
         emailSubmitting: "Submitting...",
@@ -82,6 +88,7 @@ window.SITE_CONFIG = {
         emailError: "❌ Something went wrong, please try again later."
     },
 
+    // 联系区域配置 / Contact section configuration
     contact: {
         title: "Connect with us",
         subtitle: "Have questions, feedback, or want to collaborate? Reach out through our official channels.",
@@ -105,6 +112,7 @@ window.SITE_CONFIG = {
         }
     },
 
+    // 页脚配置 / Footer configuration
     footer: {
         copyright: "JaiMo Labs. All rights reserved.",
         tagline: "Decentralized & Autonomous",
@@ -138,6 +146,7 @@ window.SITE_CONFIG = {
         ]
     },
 
+    // 社交与身份链接 / Social and identity links
     socialLinks: [
         {
             name: "ENS",
