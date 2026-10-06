@@ -4,11 +4,13 @@
 
 window.Blog = window.Blog || {};
 
-Blog.renderNavbar = function(commonConfig) {
+const commonConfig = window.SITE_CONFIG;
+
+Blog.renderNavbar = function() {
     const container = document.getElementById('navbar-container');
     if (!container) return;
     
-    // 直接从全局 commonConfig.navbar 获取配置
+    // 获取导航栏配置
     const navbarConfig = commonConfig.navbar;
     const menuItems = navbarConfig.topicsMenu || [];
     const contentItems = menuItems.filter(item => item.type !== 'action');
@@ -65,14 +67,14 @@ Blog.renderNavbar = function(commonConfig) {
 
             <div class="flex items-center gap-3">
                 <button onclick="Blog.handleSupportClick()" class="text-xs font-medium px-3.5 py-2 rounded-lg border border-[#588157] text-[#588157] hover:bg-[#588157] hover:text-white transition cursor-pointer">
-                    ${navbarConfig.supportBtnText}
+                    ${commonConfig.support.supportBtnText}
                 </button>
                 <button
                     id="connect-wallet-btn"
                     onclick="Blog.handleWalletButtonClick()"
                     class="text-xs font-medium px-4 py-2 rounded-lg bg-[#588157] text-white hover:bg-[#3a5a40] shadow-sm transition cursor-pointer"
                 >
-                    ${navbarConfig.connectWalletBtnText}
+                    ${commonConfig.wallet.connectBtnText}
                 </button>
             </div>
         </header>

@@ -4,6 +4,9 @@
 
 window.Blog = window.Blog || {};
 
+const ensURL = window.SITE_CONFIG.api.ensURL;
+const wallet = window.SITE_CONFIG.wallet;
+
 Blog.wallet = {
     address: null,
     ensName: null,
@@ -42,8 +45,8 @@ Blog.updateWalletButton = function() {
         btn.title = Blog.wallet.address; // 鼠标悬停看完整地址
         btn.classList.add('is-connected');
     } else {
-        const text = (window.SITE_CONFIG && window.SITE_CONFIG.navbar.connectWalletBtnText)
-            ? window.SITE_CONFIG.navbar.connectWalletBtnText
+        const text = (window.SITE_CONFIG && wallet.connectBtnText)
+            ? wallet.connectBtnText
             : 'Connect Wallet';
         btn.innerText = text;
         btn.title = '';
@@ -60,7 +63,7 @@ Blog.resolveEnsName = async function(address) {
 
     try {
         // 公共 ENS 解析接口：地址 -> 主域名
-        const res = await fetch('https://api.ensideas.com/ens/resolve/' + address);
+        const res = await fetch(ensURL + address);
         if (!res.ok) {
             console.warn('[ENS-API] http error', res.status);
             return null;
@@ -112,13 +115,13 @@ Blog.connectWallet = async function() {
     if (Blog.wallet.isConnecting) return;
 
     if (!Blog.hasEthereumProvider()) {
-        Blog.showToast('未检测到钱包，请先安装 MetaMask');
+        Blog.showToast(wallet.messages.walletNotFound);
         return;
     }
 
     try {
         Blog.wallet.isConnecting = true;
-        Blog.showToast('正在连接钱包...');
+        Blog.showToast(wallet.messages.connecting);
 
         const accounts = await window.ethereum.request({
             method: 'eth_requestAccounts'
@@ -127,20 +130,20 @@ Blog.connectWallet = async function() {
         if (accounts && accounts.length > 0) {
             await Blog.setWalletAccount(accounts[0]);
             if (Blog.wallet.ensName) {
-                Blog.showToast('已连接：' + Blog.wallet.ensName);
+                Blog.showToast(wallet.messages.connectedWithEns + Blog.wallet.ensName);
             } else {
-                Blog.showToast('钱包已连接');
+                Blog.showToast(wallet.messages.connected);
             }
         } else {
-            Blog.showToast('未获取到钱包地址');
+            Blog.showToast(wallet.messages.addressNotFound);
         }
     } catch (error) {
         console.error('connectWallet error:', error);
 
         if (error && (error.code === 4001 || error.code === 'ACTION_REJECTED')) {
-            Blog.showToast('你取消了钱包连接');
+            Blog.showToast(wallet.messages.cancelled);
         } else {
-            Blog.showToast('连接失败，请重试');
+            Blog.showToast(wallet.messages.failed);
         }
     } finally {
         Blog.wallet.isConnecting = false;
@@ -175,10 +178,10 @@ Blog.bindWalletEvents = function() {
     window.ethereum.on('accountsChanged', async (accounts) => {
         if (accounts && accounts.length > 0) {
             await Blog.setWalletAccount(accounts[0]);
-            Blog.showToast(Blog.wallet.ensName ? ('已切换到 ' + Blog.wallet.ensName) : '账户已切换');
+            Blog.showToast(Blog.wallet.ensName ? (wallet.messages.accountSwitchedWithEns + Blog.wallet.ensName) : wallet.messages.accountSwitched);
         } else {
             await Blog.setWalletAccount(null);
-            Blog.showToast('钱包已断开');
+            Blog.showToast(wallet.messages.disconnected);
         }
     });
 };
@@ -192,9 +195,9 @@ Blog.handleWalletButtonClick = async function() {
     if (Blog.wallet.address) {
         try {
             await navigator.clipboard.writeText(Blog.wallet.address);
-            Blog.showToast('地址已复制');
+            Blog.showToast(wallet.messages.addressCopied);
         } catch (e) {
-            Blog.showToast('复制失败，请手动复制');
+            Blog.showToast(wallet.messages.copyFailed);
         }
         return;
     }

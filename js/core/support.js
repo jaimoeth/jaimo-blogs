@@ -4,17 +4,17 @@
 
 window.Blog = window.Blog || {};
 
-const config = window.SITE_CONFIG.support;
-const walletAddr = config.walletAddress;
-const amountEth = config.amountEth;
-const network = config.network;
+const supportConfig = window.SITE_CONFIG.support;
+const walletAddr = supportConfig.walletAddress;
+const amountEth = supportConfig.amountEth;
+const network = supportConfig.network;
 
 Blog.copyWalletAddress = function() {
 
     navigator.clipboard.writeText(walletAddr).then(() => {
-        Blog.showToast(config.messages.copySuccess);
+        Blog.showToast(supportConfig.messages.copySuccess);
     }).catch(() => {
-        Blog.showToast(config.messages.copyError);
+        Blog.showToast(supportConfig.messages.copyError);
     });
 }
 
@@ -40,17 +40,17 @@ Blog.handleSupportClick = async function() {
 Blog.sendSupportEth = async function() {
 
     if (!Blog.hasEthereumProvider || !Blog.hasEthereumProvider()) {
-        Blog.showToast(config.messages.walletNotFound);
+        Blog.showToast(supportConfig.messages.walletNotFound);
         return;
     }
 
     if (typeof ethers === 'undefined') {
-        Blog.showToast(config.messages.ethersNotLoaded);
+        Blog.showToast(supportConfig.messages.ethersNotLoaded);
         return;
     }
 
     try {
-        Blog.showToast(config.messages.preparing);
+        Blog.showToast(supportConfig.messages.preparing);
 
         // 确保在以太坊主网
         const okNetwork = await Blog.ensureMainnet();
@@ -62,7 +62,7 @@ Blog.sendSupportEth = async function() {
         // 解析 jaimo.eth -> 地址
         const toAddress = await provider.resolveName(walletAddr);
         if (!toAddress) {
-            Blog.showToast(config.messages.resolveFailed + ' ' + walletAddr);
+            Blog.showToast(supportConfig.messages.resolveFailed + ' ' + walletAddr);
             return;
         }
 
@@ -72,30 +72,30 @@ Blog.sendSupportEth = async function() {
             value: ethers.parseEther(amountEth)
         });
 
-        Blog.showToast(config.messages.transactionPending);
+        Blog.showToast(supportConfig.messages.transactionPending);
 
         // 等 1 个确认（可选，体验更好）
         await tx.wait(1);
 
-        Blog.showToast(config.messages.success);
+        Blog.showToast(supportConfig.messages.success);
         console.log('[Support] tx hash =', tx.hash);
     } catch (error) {
         console.error('sendSupportEth error:', error);
 
         // 用户拒绝
         if (error && (error.code === 4001 || error.code === 'ACTION_REJECTED')) {
-            Blog.showToast(config.messages.cancelled);
+            Blog.showToast(supportConfig.messages.cancelled);
             return;
         }
 
         // 余额不足等
         const msg = (error && error.shortMessage) || (error && error.message) || '';
         if (msg.toLowerCase().includes('insufficient funds')) {
-            Blog.showToast(config.messages.insufficientFunds);
+            Blog.showToast(supportConfig.messages.insufficientFunds);
             return;
         }
 
-        Blog.showToast(config.messages.failed);
+        Blog.showToast(supportConfig.messages.failed);
     }
 };
 
@@ -111,7 +111,7 @@ Blog.ensureMainnet = async function() {
 
         if (chainId === network.chainId) return true;
 
-        Blog.showToast(config.messages.switchMainnet);
+        Blog.showToast(supportConfig.messages.switchMainnet);
 
         try {
             await window.ethereum.request({
@@ -129,7 +129,7 @@ Blog.ensureMainnet = async function() {
             }
 
             if (switchError && (switchError.code === 4001 || switchError.code === 'ACTION_REJECTED')) {
-                Blog.showToast(config.messages.switchMainnetRequired);
+                Blog.showToast(supportConfig.messages.switchMainnetRequired);
                 return false;
             }
 
@@ -137,7 +137,7 @@ Blog.ensureMainnet = async function() {
         }
     } catch (error) {
         console.error('ensureMainnet error:', error);
-        Blog.showToast(config.messages.switchMainnetFailed);
+        Blog.showToast(supportConfig.messages.switchMainnetFailed);
         return false;
     }
 };

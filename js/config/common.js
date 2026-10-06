@@ -13,14 +13,13 @@ window.SITE_CONFIG = {
 
     // 后端服务与API相关配置
     api: {
+        ensURL:"https://api.ensideas.com/ens/resolve/",
         googleScriptURL: "https://script.google.com/macros/s/AKfycbxxHkGniVjoZMsDe2LVOcgc1nbK9FUQ9R-zvbuI9m8tKO__tYQuxUfBxhAPoXAlaO9qUg/exec"
     },
 
     navbar: {
         topicsBtnText: "Topics",
         slogan: "Build from first principles.",
-        supportBtnText: "Support",
-        connectWalletBtnText: "Connect Wallet",
         topicsMenu: [
             { name: "Token Price Simulation", link: "https://github.com/jaimoeth/topics/blob/main/token-price-simulation.ipynb", type: "article" },
             { name: "✅ Verify via ENS", link: "https://app.ens.domains/jaimo.eth", type: "action" },
@@ -28,7 +27,26 @@ window.SITE_CONFIG = {
         ]
     },
 
+    wallet: {
+        connectBtnText: "Connect Wallet",
+        messages: {
+            walletNotFound: "未检测到钱包，请先安装 MetaMask",
+            connecting: "正在连接钱包...",
+            connectedWithEns: "已连接：",
+            connected: "钱包已连接",
+            addressNotFound: "未获取到钱包地址",
+            cancelled: "你取消了钱包连接",
+            failed: "连接失败，请重试",
+            accountSwitchedWithEns: "已切换到 ",
+            accountSwitched: "账户已切换",
+            disconnected: "钱包已断开",
+            addressCopied: "地址已复制",
+            copyFailed: "复制失败，请手动复制"
+        }
+    },
+
     support: {
+        supportBtnText: "Support",
         walletAddress: "jaimo.eth",
         amountEth: "0.002",
         messages: {
