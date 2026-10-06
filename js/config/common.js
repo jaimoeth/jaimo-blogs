@@ -106,7 +106,7 @@ window.SITE_CONFIG = {
     },
 
     footer: {
-        copyright: "@2026 JaiMo Labs. All rights reserved.",
+        copyright: "JaiMo Labs. All rights reserved.",
         tagline: "Decentralized & Autonomous",
         columns: [
             {

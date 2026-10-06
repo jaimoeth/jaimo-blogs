@@ -33,7 +33,7 @@ Blog.renderFooter = function(commonConfig) {
                             </div>
                             <span class="font-bold text-base text-[#2b2d42]">${Blog.escapeHtml(commonConfig.meta.siteName)}</span>
                         </div>
-                        <p class="text-xs text-gray-500">${Blog.escapeHtml(footer.copyright)}</p>
+                        <p class="text-xs text-gray-500">@${new Date().getFullYear()} ${Blog.escapeHtml(footer.copyright)}</p>
                     </div>
 
                     ${footer.columns.map(col => `
