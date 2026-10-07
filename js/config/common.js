@@ -51,7 +51,7 @@ window.SITE_CONFIG = {
     // 支持、赞助功能配置 / Support and donation configuration
     support: {
         supportBtnText: "Support",
-        walletAddress: "vitalik.eth",
+        walletAddress: "jaimo.eth",
         amountEth: "0.002",
         messages: {
             copySuccess: "✅ ENS Address Copied!",
