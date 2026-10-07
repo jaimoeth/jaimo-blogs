@@ -63,7 +63,7 @@ window.SITE_CONFIG = {
             transactionPending: "Transaction submitted, awaiting confirmation...",
             success: "✅ Support successful—thank you!",
             cancelled: "You cancelled the payment.",
-            insufficientFunds: "❌ Insufficient balance [0.002 ETH]",
+            insufficientFunds: "❌ Insufficient balance: 0.002 ETH",
             failed: "❌ Payment failed; please try again later.",
             switchMainnet: "Please switch to the Ethereum mainnet...",
             switchMainnetFailed: "❌ Failed to switch to the mainnet; please switch manually and try again.",
