@@ -31,12 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainContainer = document.getElementById("main-container");
     if (mainContainer) {
         mainContainer.innerHTML = `
-            <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                <div class="lg:col-span-4 lg:sticky lg:top-20 space-y-6">
-                    ${Blog.renderSidebar(mergedDatabase)}
-                </div>
-                <div class="lg:col-span-8 space-y-8">
-                    ${Blog.renderLatestArticles(mergedDatabase)}
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)_200px] gap-22 items-start">
+                    <div class="lg:sticky lg:top-20 space-y-6">
+                        ${Blog.renderSidebar(mergedDatabase)}
+                    </div>
+                    <div class="min-w-0 space-y-8">
+                        ${Blog.renderLatestArticles(mergedDatabase)}
+                    </div>
+                    <div></div>
                 </div>
             </div>
         `;
