@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Blog.renderFooter(commonConfig);
     
     // 5. 绑定全局交互事件 / Bind global interaction events
+    Blog.initSidebar();
     Blog.initGlobalEvents();
 
     // 6. 恢复钱包状态并监听账户变化 / Restore wallet state and listen for account changes
