@@ -6,8 +6,8 @@ window.SITE_CONFIG = {
     // 站点基础信息 / Basic site information
     meta: {
         title: "JaiMo Labs | Blog",
-        logoImg: "images/avatar.png",
-        backgroundImage: "images/background.png",
+        logoImg: "/images/avatar.png",
+        backgroundImage: "/images/background.png",
         siteName: "JaiMo Blogs",
         homeLink: "https://blog.jaimo.xyz"
     },
