@@ -58,7 +58,7 @@ window.DATABAR_CONFIG = {
                         "title": "Token Price Simulation",
                         "date": "2026/10/10",
                         "tag": "Topics",
-                        "url": "article.html",
+                        "url": "article.html?article=token-price-simulation",
                         "summary": "From fundamental assumptions to the derivation of Stochastic Differential Equations (SDEs). The complete process of mathematical modeling and quantitative simulation for token price generation functions."
                     }
                 ]

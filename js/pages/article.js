@@ -25,15 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mainContainer) {
         mainContainer.innerHTML = `
             <div class="max-w-7xl mx-auto px-6 py-12">
-                <div class="grid grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] gap-22 items-start">
+                <div class="grid grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)_200px] gap-2 items-start">
                     <div class="lg:sticky lg:top-20 space-y-6">
                         ${Blog.renderSidebar(database)}
                     </div>
-                    <div class="min-w-0 space-y-8">
+                    <div id="article-container" class="min-w-0 space-y-8">
                     </div>
                 </div>
             </div>
         `;
+        Blog.renderArticle(database);
     }
     
     // 4. 渲染联系与底部模块 / Render contact and footer components

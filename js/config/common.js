@@ -23,7 +23,7 @@ window.SITE_CONFIG = {
         topicsBtnText: "Topics",
         slogan: "Build from first principles.",
         topicsMenu: [
-            { name: "Token Price Simulation", link: "https://github.com/jaimoeth/topics/blob/main/token-price-simulation.ipynb", type: "article" },
+            { name: "Token Price Simulation", link: "article.html?article=token-price-simulation", type: "article" },
             { name: "✅ Verify via ENS", link: "https://app.ens.domains/jaimo.eth", type: "action" },
             { name: "💬 Contact Us", link: "#contact-container", type: "action" }
         ]
