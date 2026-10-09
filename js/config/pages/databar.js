@@ -37,7 +37,7 @@ window.DATABAR_CONFIG = {
                         "title": "Basics Chinese",
                         "date": "2026/10/11",
                         "tag": "Python",
-                        "url": "https://github.com/jaimoeth/python/blob/main/basics-chinese.ipynb",
+                        "url": "article.html?article=basics-chinese",
                         "summary": "这份开源学习笔记基于 Ana Bell 博士等教授讲授的 MIT 6.0001 课程整理而成。本笔记采用 CC-BY-NC-SA 许可协议进行分享。"
                     },
                     {
